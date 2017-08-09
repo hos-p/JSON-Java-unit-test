@@ -730,7 +730,7 @@ public class XMLTest {
     @Test
     public void testToJSONArray_jsonOutput() {
         final String originalXml = "<root><id>01</id><id>1</id><id>00</id><id>0</id><item id=\"01\"/><title>True</title></root>";
-        final String expectedJsonString = "{\"root\":{\"item\":{\"id\":\"01\"},\"id\":[\"01\",1,\"00\",0],\"title\":true}}";
+        final String expectedJsonString = "{\"root\":{\"id\":[\"01\",1,\"00\",0],\"item\":{\"id\":\"01\"},\"title\":true}}";
         final JSONObject actualJsonOutput = XML.toJSONObject(originalXml, false);
 
         assertEquals(expectedJsonString, actualJsonOutput.toString());
@@ -753,14 +753,14 @@ public class XMLTest {
     @Test
     public void testToJsonXML() {
         final String originalXml = "<root><id>01</id><id>1</id><id>00</id><id>0</id><item id=\"01\"/><title>True</title></root>";
-        final String expectedJsonString = "{\"root\":{\"item\":{\"id\":\"01\"},\"id\":[\"01\",\"1\",\"00\",\"0\"],\"title\":\"True\"}}";
+        final String expectedJsonString = "{\"root\":{\"id\":[\"01\",\"1\",\"00\",\"0\"],\"item\":{\"id\":\"01\"},\"title\":\"True\"}}";
 
         final JSONObject json = XML.toJSONObject(originalXml,true);
         assertEquals(expectedJsonString, json.toString());
-        
+
         final String reverseXml = XML.toString(json);
         // this reversal isn't exactly the same. use JSONML for an exact reversal
-        final String expectedReverseXml = "<root><item><id>01</id></item><id>01</id><id>1</id><id>00</id><id>0</id><title>True</title></root>";
+        final String expectedReverseXml = "<root><id>01</id><id>1</id><id>00</id><id>0</id><item><id>01</id></item><title>True</title></root>";
 
         assertEquals(expectedReverseXml, reverseXml);
     }
